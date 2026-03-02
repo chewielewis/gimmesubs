@@ -1,10 +1,15 @@
 import type { Settings } from '../types/index.ts';
-import { FPS_OPTIONS } from '../lib/defaults.ts';
+import { FPS_OPTIONS, DEFAULT_SETTINGS } from '../lib/defaults.ts';
 import { validateTimecode } from '../lib/timecode.ts';
 
 interface SettingsPanelProps {
   settings: Settings;
   onChange: (settings: Settings) => void;
+}
+
+function safeNum(value: string, fallback: number): number {
+  const n = Number(value);
+  return isNaN(n) ? fallback : n;
 }
 
 export function SettingsPanel({ settings, onChange }: SettingsPanelProps): React.JSX.Element {
@@ -73,7 +78,7 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps): React
               max={30}
               step={1}
               value={settings.charsPerSecond}
-              onChange={(e) => onChange({ ...settings, charsPerSecond: Number(e.target.value) })}
+              onChange={(e) => onChange({ ...settings, charsPerSecond: safeNum(e.target.value, DEFAULT_SETTINGS.charsPerSecond) })}
               className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
           </div>
@@ -88,7 +93,7 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps): React
               max={10}
               step={0.1}
               value={settings.minDuration}
-              onChange={(e) => onChange({ ...settings, minDuration: Number(e.target.value) })}
+              onChange={(e) => onChange({ ...settings, minDuration: safeNum(e.target.value, DEFAULT_SETTINGS.minDuration) })}
               className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
           </div>
@@ -105,7 +110,7 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps): React
             max={30}
             step={0.1}
             value={settings.titleDuration}
-            onChange={(e) => onChange({ ...settings, titleDuration: Number(e.target.value) })}
+            onChange={(e) => onChange({ ...settings, titleDuration: safeNum(e.target.value, DEFAULT_SETTINGS.titleDuration) })}
             className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
         </div>
@@ -122,7 +127,7 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps): React
           max={10}
           step={0.1}
           value={settings.gapDuration}
-          onChange={(e) => onChange({ ...settings, gapDuration: Number(e.target.value) })}
+          onChange={(e) => onChange({ ...settings, gapDuration: safeNum(e.target.value, DEFAULT_SETTINGS.gapDuration) })}
           className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
         />
       </div>
@@ -138,7 +143,7 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps): React
           max={80}
           step={1}
           value={settings.maxLineLength}
-          onChange={(e) => onChange({ ...settings, maxLineLength: Number(e.target.value) })}
+          onChange={(e) => onChange({ ...settings, maxLineLength: safeNum(e.target.value, DEFAULT_SETTINGS.maxLineLength) })}
           className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
         />
       </div>

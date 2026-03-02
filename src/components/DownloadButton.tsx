@@ -11,9 +11,11 @@ export function DownloadButton({ srtContent, disabled }: DownloadButtonProps): R
   function handleDownload(): void {
     const blob = new Blob([srtContent], { type: 'text/srt;charset=utf-8' });
     const url = URL.createObjectURL(blob);
+    const now = new Date();
+    const ts = now.toISOString().replace(/[-:T]/g, '').slice(0, 14);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'subtitles.srt';
+    a.download = `subs-${ts}.srt`;
     a.click();
     URL.revokeObjectURL(url);
   }

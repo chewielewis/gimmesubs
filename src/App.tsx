@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import type { Settings } from './types/index.ts';
 import { DEFAULT_SETTINGS } from './lib/defaults.ts';
 import { validateTimecode } from './lib/timecode.ts';
-import { generateSrt } from './lib/srt.ts';
+import { generateSrt, generateSubtitles } from './lib/srt.ts';
 import { Header } from './components/Header.tsx';
 import { TextInput } from './components/TextInput.tsx';
 import { SettingsPanel } from './components/SettingsPanel.tsx';
@@ -17,10 +17,15 @@ export default function App(): React.JSX.Element {
   const hasText = text.trim().length > 0;
   const hasValidTimecode = validateTimecode(settings.startTimecode, settings.fps) === null;
 
-  const srtContent = useMemo(() => {
-    if (!hasText || !hasValidTimecode) return '';
-    return generateSrt(text, settings);
+  const subtitles = useMemo(() => {
+    if (!hasText || !hasValidTimecode) return [];
+    return generateSubtitles(text, settings);
   }, [text, settings, hasText, hasValidTimecode]);
+
+  const srtContent = useMemo(() => {
+    if (subtitles.length === 0) return '';
+    return generateSrt(text, settings);
+  }, [text, settings, subtitles]);
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100">
@@ -38,7 +43,7 @@ export default function App(): React.JSX.Element {
 
         <div className="mt-6 space-y-4">
           <DownloadButton srtContent={srtContent} disabled={!hasText || !hasValidTimecode} />
-          <Preview srtContent={srtContent} />
+          <Preview srtContent={srtContent} subtitleCount={subtitles.length} />
           <ImportInstructions />
         </div>
       </div>

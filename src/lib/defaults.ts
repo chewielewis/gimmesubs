@@ -6,7 +6,7 @@ export const DEFAULT_SETTINGS: Settings = {
   fps: 25,
   startTimecode: '01:00:00:00',
   titleDuration: 3.0,
-  autoDuration: false,
+  autoDuration: true,
   charsPerSecond: 15,
   minDuration: 1.0,
   gapDuration: 0.5,
