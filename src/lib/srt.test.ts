@@ -9,6 +9,7 @@ const testSettings: Settings = {
   titleDuration: 3.0,
   gapDuration: 0.5,
   maxLineLength: 42,
+  ignoreBlankLines: false,
 };
 
 describe('generateSubtitles', () => {
@@ -73,6 +74,16 @@ describe('generateSubtitles', () => {
     const settings: Settings = { ...testSettings, startTimecode: '01:00:00:00' };
     const subs = generateSubtitles('Hello', settings);
     expect(subs[0].startMs).toBe(3_600_000);
+  });
+
+  it('ignores blank lines when ignoreBlankLines is true', () => {
+    const settings: Settings = { ...testSettings, ignoreBlankLines: true };
+    const text = 'Before\n\n\nAfter';
+    const subs = generateSubtitles(text, settings);
+
+    expect(subs).toHaveLength(2);
+    // No extra pause from blank lines, just normal gap
+    expect(subs[1].startMs).toBe(3500);
   });
 });
 

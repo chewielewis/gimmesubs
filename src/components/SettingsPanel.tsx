@@ -97,6 +97,15 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps): React
           className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
         />
       </div>
+      <label className="flex items-center gap-2 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={settings.ignoreBlankLines}
+          onChange={(e) => onChange({ ...settings, ignoreBlankLines: e.target.checked })}
+          className="accent-cyan-500 w-4 h-4"
+        />
+        <span className="text-xs text-slate-400">Ignore blank lines</span>
+      </label>
     </div>
   );
 }

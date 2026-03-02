@@ -4,6 +4,7 @@ export interface Settings {
   titleDuration: number; // seconds
   gapDuration: number; // seconds
   maxLineLength: number; // characters
+  ignoreBlankLines: boolean;
 }
 
 export interface Subtitle {

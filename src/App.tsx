@@ -37,11 +37,15 @@ export default function App(): React.JSX.Element {
         </div>
 
         <div className="mt-6 space-y-4">
-          <Preview srtContent={srtContent} />
           <DownloadButton srtContent={srtContent} disabled={!hasText || !hasValidTimecode} />
+          <Preview srtContent={srtContent} />
           <PremiereInstructions />
         </div>
       </div>
+
+      <footer className="border-t border-slate-800 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>Tim Ellis — <a href="mailto:timandrewellis@gmail.com" className="text-slate-400 hover:text-cyan-400">timandrewellis@gmail.com</a></p>
+      </footer>
     </div>
   );
 }

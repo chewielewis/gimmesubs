@@ -8,4 +8,5 @@ export const DEFAULT_SETTINGS: Settings = {
   titleDuration: 3.0,
   gapDuration: 0.5,
   maxLineLength: 42,
+  ignoreBlankLines: false,
 };

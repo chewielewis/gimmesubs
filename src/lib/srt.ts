@@ -18,8 +18,10 @@ export function generateSubtitles(text: string, settings: Settings): Subtitle[] 
     const trimmed = rawLine.trim();
 
     if (trimmed === '') {
-      // Blank line = intentional pause
-      currentMs += gapMs;
+      if (!settings.ignoreBlankLines) {
+        // Blank line = intentional pause
+        currentMs += gapMs;
+      }
       continue;
     }
 
