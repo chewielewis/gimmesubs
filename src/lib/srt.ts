@@ -10,7 +10,8 @@ export function generateSubtitles(text: string, settings: Settings): Subtitle[] 
   const subtitles: Subtitle[] = [];
 
   let currentMs = smpteToMs(settings.startTimecode, settings.fps);
-  const durationMs = settings.titleDuration * 1000;
+  const fixedDurationMs = settings.titleDuration * 1000;
+  const minDurationMs = settings.minDuration * 1000;
   const gapMs = settings.gapDuration * 1000;
   let index = 1;
 
@@ -19,13 +20,17 @@ export function generateSubtitles(text: string, settings: Settings): Subtitle[] 
 
     if (trimmed === '') {
       if (!settings.ignoreBlankLines) {
-        // Blank line = intentional pause
         currentMs += gapMs;
       }
       continue;
     }
 
     const wrappedText = wrapLine(trimmed, settings.maxLineLength);
+
+    let durationMs = fixedDurationMs;
+    if (settings.autoDuration) {
+      durationMs = Math.max(minDurationMs, (trimmed.length / settings.charsPerSecond) * 1000);
+    }
 
     subtitles.push({
       index,

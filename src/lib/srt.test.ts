@@ -7,6 +7,9 @@ const testSettings: Settings = {
   fps: 24,
   startTimecode: '00:00:00:00',
   titleDuration: 3.0,
+  autoDuration: false,
+  charsPerSecond: 15,
+  minDuration: 1.0,
   gapDuration: 0.5,
   maxLineLength: 42,
   ignoreBlankLines: false,
@@ -84,6 +87,31 @@ describe('generateSubtitles', () => {
     expect(subs).toHaveLength(2);
     // No extra pause from blank lines, just normal gap
     expect(subs[1].startMs).toBe(3500);
+  });
+
+  it('calculates duration from line length when autoDuration is true', () => {
+    const settings: Settings = { ...testSettings, autoDuration: true, charsPerSecond: 10, minDuration: 1.0 };
+    // 30 chars at 10 CPS = 3 seconds
+    const text = 'This line is thirty chars long';
+    const subs = generateSubtitles(text, settings);
+    expect(subs[0].endMs - subs[0].startMs).toBe(3000);
+  });
+
+  it('enforces minimum duration in auto mode', () => {
+    const settings: Settings = { ...testSettings, autoDuration: true, charsPerSecond: 15, minDuration: 2.0 };
+    // 3 chars at 15 CPS = 200ms, but min is 2000ms
+    const text = 'Hi';
+    const subs = generateSubtitles(text, settings);
+    expect(subs[0].endMs - subs[0].startMs).toBe(2000);
+  });
+
+  it('auto duration gives longer lines more time', () => {
+    const settings: Settings = { ...testSettings, autoDuration: true, charsPerSecond: 15, minDuration: 1.0 };
+    const text = 'Short\nThis is a much longer subtitle line here';
+    const subs = generateSubtitles(text, settings);
+    const shortDuration = subs[0].endMs - subs[0].startMs;
+    const longDuration = subs[1].endMs - subs[1].startMs;
+    expect(longDuration).toBeGreaterThan(shortDuration);
   });
 });
 

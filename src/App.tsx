@@ -43,8 +43,10 @@ export default function App(): React.JSX.Element {
         </div>
       </div>
 
-      <footer className="border-t border-slate-800 mt-12 py-6 text-center text-xs text-slate-500">
-        <p>Tim Ellis — <a href="mailto:timandrewellis@gmail.com" className="text-slate-400 hover:text-cyan-400">timandrewellis@gmail.com</a></p>
+      <footer className="border-t border-slate-800 mt-12 py-6 text-center text-xs text-slate-500 space-y-1">
+        <p>Created by <span className="text-slate-400">Tim Ellis</span></p>
+        <p>Made for <span className="text-slate-400">7days</span></p>
+        <p><a href="mailto:timandrewellis@gmail.com" className="text-slate-400 hover:text-cyan-400">timandrewellis@gmail.com</a></p>
       </footer>
     </div>
   );

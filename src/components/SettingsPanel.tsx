@@ -50,21 +50,66 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps): React
         )}
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="duration" className="text-xs text-slate-400">
-          Title Duration (sec)
-        </label>
+      <label className="flex items-center gap-2 cursor-pointer">
         <input
-          id="duration"
-          type="number"
-          min={0.1}
-          max={30}
-          step={0.1}
-          value={settings.titleDuration}
-          onChange={(e) => onChange({ ...settings, titleDuration: Number(e.target.value) })}
-          className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          type="checkbox"
+          checked={settings.autoDuration}
+          onChange={(e) => onChange({ ...settings, autoDuration: e.target.checked })}
+          className="accent-cyan-500 w-4 h-4"
         />
-      </div>
+        <span className="text-xs text-slate-400">Auto duration (based on line length)</span>
+      </label>
+
+      {settings.autoDuration ? (
+        <>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="cps" className="text-xs text-slate-400">
+              Reading Speed (chars/sec)
+            </label>
+            <input
+              id="cps"
+              type="number"
+              min={5}
+              max={30}
+              step={1}
+              value={settings.charsPerSecond}
+              onChange={(e) => onChange({ ...settings, charsPerSecond: Number(e.target.value) })}
+              className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="min-duration" className="text-xs text-slate-400">
+              Minimum Duration (sec)
+            </label>
+            <input
+              id="min-duration"
+              type="number"
+              min={0.5}
+              max={10}
+              step={0.1}
+              value={settings.minDuration}
+              onChange={(e) => onChange({ ...settings, minDuration: Number(e.target.value) })}
+              className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col gap-1">
+          <label htmlFor="duration" className="text-xs text-slate-400">
+            Title Duration (sec)
+          </label>
+          <input
+            id="duration"
+            type="number"
+            min={0.1}
+            max={30}
+            step={0.1}
+            value={settings.titleDuration}
+            onChange={(e) => onChange({ ...settings, titleDuration: Number(e.target.value) })}
+            className="bg-slate-800 text-slate-100 border border-slate-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          />
+        </div>
+      )}
 
       <div className="flex flex-col gap-1">
         <label htmlFor="gap" className="text-xs text-slate-400">
