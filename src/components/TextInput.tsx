@@ -38,7 +38,7 @@ export function TextInput({ value, onChange }: TextInputProps): React.JSX.Elemen
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 flex-1">
       <div className="flex items-center justify-between">
         <label htmlFor="text-input" className="text-sm font-medium text-slate-300">
           Paste your text
@@ -65,7 +65,7 @@ export function TextInput({ value, onChange }: TextInputProps): React.JSX.Elemen
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
         placeholder={"Paste lyrics or subtitle text here...\n\nEach line becomes a subtitle.\nBlank lines add a pause.\n\nOr drag & drop a .txt / .docx file."}
-        className="w-full h-64 lg:h-96 bg-slate-800 text-slate-100 border border-slate-700 rounded-lg p-4 font-mono text-sm resize-y placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+        className="w-full flex-1 min-h-48 bg-slate-800 text-slate-100 border border-slate-700 rounded-lg p-4 font-mono text-sm resize-y placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
         spellCheck={false}
       />
     </div>

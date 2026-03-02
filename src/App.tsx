@@ -33,7 +33,7 @@ export default function App(): React.JSX.Element {
         <Header />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 flex flex-col">
             <TextInput value={text} onChange={setText} />
           </div>
           <div className="lg:col-span-2">
