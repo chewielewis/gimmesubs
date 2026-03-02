@@ -8,7 +8,7 @@ import { TextInput } from './components/TextInput.tsx';
 import { SettingsPanel } from './components/SettingsPanel.tsx';
 import { Preview } from './components/Preview.tsx';
 import { DownloadButton } from './components/DownloadButton.tsx';
-import { PremiereInstructions } from './components/PremiereInstructions.tsx';
+import { ImportInstructions } from './components/PremiereInstructions.tsx';
 
 export default function App(): React.JSX.Element {
   const [text, setText] = useState('');
@@ -39,7 +39,7 @@ export default function App(): React.JSX.Element {
         <div className="mt-6 space-y-4">
           <DownloadButton srtContent={srtContent} disabled={!hasText || !hasValidTimecode} />
           <Preview srtContent={srtContent} />
-          <PremiereInstructions />
+          <ImportInstructions />
         </div>
       </div>
 
